@@ -1,0 +1,25 @@
+{
+  "name": "lc",
+  "version": "1.0.0",
+  "description": "App that stores my LC questions.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/FPardo1023/LC.git"
+  },
+  "keywords": [
+    "LC"
+  ],
+  "author": "Fabio Pardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FPardo1023/LC/issues"
+  },
+  "homepage": "https://github.com/FPardo1023/LC#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
