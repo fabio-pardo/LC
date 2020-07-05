@@ -1,0 +1,22 @@
+{
+  "name": "lc",
+  "version": "1.0.0",
+  "description": "LC root",
+  "main": "",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FPardo1023/LC.git"
+  },
+  "author": "Fabio Pardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FPardo1023/LC/issues"
+  },
+  "homepage": "https://github.com/FPardo1023/LC#readme",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
