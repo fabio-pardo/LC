@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
     }, function() {
       client.close();
       console.log(documents);
-      res.render('questions', {name: 'Fabio'})
+      res.render('questions', {name: documents})
     })
   })
 })
