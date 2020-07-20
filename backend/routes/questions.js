@@ -13,40 +13,10 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.route("/").get((req, res, next) => {
-  var documents = [];
-  MongoClient.connect(
-    destinationNode,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
-    function (err, client) {
-      // Retrieving the collection questions from MongoDB test
-      var db = client.db(dbName);
-      var collection = db.collection("questions");
-
-      var cursor = collection.find().sort({ _id: 1 });
-      cursor.forEach(
-        function (doc, err) {
-          documents.push(doc);
-        },
-        function () {
-          client.close();
-          console.log(documents);
-          res.render("questions", { name: documents });
-        }
-      );
-    }
-  );
-});
-
 router
-  .route("/:questionid")
+  .route("/")
   .get((req, res) => {
-    // res.send("GET question: " + req.params.questionid);
-
-    var documents = [];
+    var questions = [];
     MongoClient.connect(
       destinationNode,
       {
@@ -58,15 +28,20 @@ router
         var db = client.db(dbName);
         var collection = db.collection("questions");
 
-        var cursor = collection.find({ _id: parseInt(req.params.questionid) });
+        var cursor = collection.find().sort({ _id: 1 }, function (err) {
+          if (err) {
+            res.render("error", { message: "ERROR" });
+          }
+        });
         cursor.forEach(
-          function (doc, err) {
-            documents.push(doc);
+          function (doc) {
+            questions.push(doc);
           },
           function () {
             client.close();
-            console.log(documents);
-            res.render("questions", { name: documents });
+            console.log(questions);
+            res.render("questions", { question: questions });
+            res.send(questions);
           }
         );
       }
@@ -86,31 +61,59 @@ router
 
         // document to be inserted
         // test
-        var doc = {
-          _id: 5,
-          name: "Test Five",
-          difficulty: "Easy",
-          passed: "true",
-        };
+        var question = req.body;
+        console.log(question.id);
+        var question_id = question._id;
 
         // inserting document to 'questions collection' using insertOne
         // var cursor = collection.insertOne(doc, function (err, res) {
-        var cursor = collection.updateOne(
-          { _id: 5 },
-          { $set: doc },
+        collection.updateOne(
+          { _id: question_id },
+          { $set: question },
           { upsert: true },
-          function (err, res) {
+          function (err) {
             if (err) {
-              console.log(err);
+              res.send(err);
             } else {
-              console.log("New Question Inserted/Updated");
-              console.log(JSON.stringify(doc));
+              res.render("questions", {
+                statement: "Question Inserted/Updated:",
+                question: question,
+              });
             }
           }
         );
       }
     );
-    res.send("hi put /questions/" + req.params.questionid);
   });
+
+router.route("/:questionid").get((req, res) => {
+  // res.send("GET question: " + req.params.questionid);
+
+  MongoClient.connect(
+    destinationNode,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    function (err, client) {
+      // Retrieving the collection questions from MongoDB test
+      var db = client.db(dbName);
+      var collection = db.collection("questions");
+
+      collection.findOne({ _id: Number(req.params.questionid) }, function (
+        err,
+        result
+      ) {
+        if (err) {
+          console.log(err);
+        } else {
+          // send the question back to client
+          res.send(result);
+        }
+        client.close();
+      });
+    }
+  );
+});
 
 module.exports = router;
