@@ -30,7 +30,7 @@ router
 
         var cursor = collection.find().sort({ _id: 1 }, function (err) {
           if (err) {
-            res.render("error", { message: "ERROR" });
+            console.log(err);
           }
         });
         cursor.forEach(
@@ -39,8 +39,7 @@ router
           },
           function () {
             client.close();
-            console.log(questions);
-            res.render("questions", { question: questions });
+            console.log("Questions sent");
             res.send(questions);
           }
         );
@@ -62,7 +61,6 @@ router
         // document to be inserted
         // test
         var question = req.body;
-        console.log(question.id);
         var question_id = question._id;
 
         // inserting document to 'questions collection' using insertOne
@@ -73,13 +71,11 @@ router
           { upsert: true },
           function (err) {
             if (err) {
-              res.send(err);
+              res.send({ updated: false });
             } else {
-              res.render("questions", {
-                statement: "Question Inserted/Updated:",
-                question: question,
-              });
+              res.send({ updated: true });
             }
+            client.close();
           }
         );
       }
