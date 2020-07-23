@@ -1,0 +1,16 @@
+.root {
+  flex-grow: 1;
+  /*height: 100vh;*/
+}
+
+.welcome {
+  background-color: #cfe8fc;
+  text-align: center;
+  /*margin-left: 5%;*/
+  /*margin-right: 5%;*/
+}
+
+p {
+  margin-left: 25%;
+  margin-right:25%;
+}
