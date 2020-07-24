@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+  min-width: 320px;
+  line-height: 1.42857143;
+  box-sizing: border-box;
 }
 
 code {
@@ -13,11 +17,16 @@ code {
 }
 
 #root {
-  background-color: snow;
+  /*background-color: snow;*/
   height: 100%;
 }
 
 html,body {
-  margin: 0px;
   height: 100%;
+}
+
+body {
+  width: 90%;
+  max-width: 960px;
+  margin: 0 auto;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/Welcome.css";
-import div from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 class Welcome extends React.Component {
@@ -20,7 +19,7 @@ class Welcome extends React.Component {
           <Grid item>
             <p>
               Here you can store your leetcode progress and each day we'll
-              randomly select a question that you attempted previously, but
+              randomly suggest a question that you attempted previously, but
               didn't pass, so you can see if you've progressed in your technical
               interview grind. Let's get started!
             </p>

@@ -1,0 +1,7 @@
+#table {
+  border-width: 1px;
+  border-style: solid;
+  display: flex;
+  position: relative;
+  margin: auto;
+}
