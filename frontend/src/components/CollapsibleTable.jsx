@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/CollapsibleTable.css";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -6,32 +6,34 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { styled, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useRowStyles = makeStyles({
-  root: {
-    "& > *": {
-      borderBottom: "unset",
-    },
-  },
   cell: {
     color: "black",
     fontWeight: "bold",
   },
 });
 
-const LabelCell = styled(TableCell)({
-  fontWeight: "bold",
-});
-
 function CollapsibleTable() {
   const classes = useRowStyles();
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    fetch("/questions", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestions(data);
+      })
+      .catch((err) => console.log("Error:", err));
+  }, []);
+
   return (
     <div id="table">
       <TableContainer>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow hover className={classes.root}>
+            <TableRow>
               <TableCell
                 onClick={() => {
                   console.log("sup");
@@ -48,7 +50,23 @@ function CollapsibleTable() {
               <TableCell align="right">Last Attempted</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {questions.length > 0 ? (
+              questions.map((question) => (
+                <TableRow key={question._id}>
+                  <TableCell align="right">{question._id}</TableCell>
+                  <TableCell align="right">{question.name}</TableCell>
+                  <TableCell align="right">{question.difficulty}</TableCell>
+                  <TableCell align="right">
+                    {question.passed ? "Passed" : "Failed"}
+                  </TableCell>
+                  <TableCell align="right">{question.date}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow></TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
