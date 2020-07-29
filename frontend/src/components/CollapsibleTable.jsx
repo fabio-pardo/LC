@@ -8,15 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useRowStyles = makeStyles({
-  cell: {
-    color: "black",
-    fontWeight: "bold",
-  },
-});
-
 function CollapsibleTable() {
-  const classes = useRowStyles();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -34,19 +26,10 @@ function CollapsibleTable() {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell
-                onClick={() => {
-                  console.log("sup");
-                }}
-                align="right"
-              >
-                #
-              </TableCell>
+              <TableCell align="right">#</TableCell>
               <TableCell align="right">Name</TableCell>
-              <TableCell className={classes.cell} align="right">
-                Difficulty
-              </TableCell>
-              <TableCell align="right">Passed</TableCell>
+              <TableCell align="right">Difficulty</TableCell>
+              <TableCell align="right">Status</TableCell>
               <TableCell align="right">Last Attempted</TableCell>
             </TableRow>
           </TableHead>
