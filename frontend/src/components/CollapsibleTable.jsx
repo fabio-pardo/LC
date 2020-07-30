@@ -6,7 +6,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { makeStyles } from "@material-ui/core/styles";
 
 function CollapsibleTable() {
   const [questions, setQuestions] = useState([]);

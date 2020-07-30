@@ -1,4 +1,13 @@
 #questionForm {
   margin-top: 5px;
-  margin-bottom: 5px;
+  padding: 5px;
+  padding-bottom: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+#submitQuestionP {
+  margin-left: 0;
+  font-weight: bold;
 }
