@@ -10,7 +10,7 @@ export default function QuestionForm() {
   };
   return (
     <div id="questionForm">
-      <p>Submit a question:</p>
+      <p id="submitQuestionP">Submit a question:</p>
       <Form onSubmit={handleSubmitQuestion}>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridQuestionNumber">
