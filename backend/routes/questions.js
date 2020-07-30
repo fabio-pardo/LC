@@ -26,15 +26,15 @@ router
       function (err, client) {
         // Retrieving the collection questions from MongoDB test
         var db = client.db(dbName);
-        var collection = db.collection("questions");
-
-        var cursor = collection.find().sort({ _id: 1 }, function (err) {
+        var myquestions = db.collection("questions");
+        var questionBank = db.collection("questionBank");
+        var cursor = myquestions.find().sort({ _id: 1 }, function (err) {
           if (err) {
             console.log(err);
           }
         });
         cursor.forEach(
-          function (doc) {
+          (doc) => {
             questions.push(doc);
           },
           function () {
