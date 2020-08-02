@@ -18,6 +18,7 @@ code {
 #root {
   height: 100%;
   margin: 0px auto;
-  width: 960px;
+  width: 100%;
+  max-width: 960px;
 }
 

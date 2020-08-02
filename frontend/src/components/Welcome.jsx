@@ -6,13 +6,7 @@ class Welcome extends React.Component {
   render() {
     return (
       <div className="welcome">
-        <Grid
-          spacing={0}
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="center"
-        >
+        <Grid container direction="column">
           <Grid item>
             <h1>Hello! Welcome to the LC App!</h1>
           </Grid>

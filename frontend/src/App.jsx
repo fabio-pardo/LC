@@ -3,14 +3,16 @@ import "./App.css";
 import Welcome from "./components/Welcome";
 import CollapsibleTable from "./components/CollapsibleTable";
 import QuestionForm from "./components/QuestionForm";
+import Container from "react-bootstrap/Container";
+
 class App extends React.Component {
   render() {
     return (
-      <div id="app">
+      <Container fluid>
         <Welcome />
         <QuestionForm />
         <CollapsibleTable />
-      </div>
+      </Container>
     );
   }
 }

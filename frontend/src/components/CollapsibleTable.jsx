@@ -6,6 +6,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import Paper from "@material-ui/core/Paper";
 
 function CollapsibleTable() {
   const [questions, setQuestions] = useState([]);
@@ -20,38 +21,38 @@ function CollapsibleTable() {
   }, []);
 
   return (
-    <div id="table">
-      <TableContainer>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">#</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Difficulty</TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Last Attempted</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {questions.length > 0 ? (
-              questions.map((question) => (
-                <TableRow key={question._id}>
-                  <TableCell align="right">{question._id}</TableCell>
-                  <TableCell align="right">{question.name}</TableCell>
-                  <TableCell align="right">{question.difficulty}</TableCell>
-                  <TableCell align="right">
-                    {question.passed ? "Passed" : "Failed"}
-                  </TableCell>
-                  <TableCell align="right">{question.date}</TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow></TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+    <TableContainer component={Paper}>
+      <Table size="small" aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">#</TableCell>
+            <TableCell align="center">Title</TableCell>
+            <TableCell align="center">Difficulty</TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Last Attempted</TableCell>
+            <TableCell align="center">Solution</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {questions.length > 0 ? (
+            questions.map((question) => (
+              <TableRow key={question._id}>
+                <TableCell align="center">{question._id}</TableCell>
+                <TableCell align="center">{question.name}</TableCell>
+                <TableCell align="center">{question.difficulty}</TableCell>
+                <TableCell align="center">
+                  {question.passed ? "Passed" : "Failed"}
+                </TableCell>
+                <TableCell align="center">{question.date}</TableCell>
+                <TableCell align="center">{question.solution}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow></TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
