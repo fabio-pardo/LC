@@ -38,13 +38,21 @@ function CollapsibleTable() {
             questions.map((question) => (
               <TableRow key={question._id}>
                 <TableCell align="center">{question._id}</TableCell>
-                <TableCell align="center">{question.name}</TableCell>
-                <TableCell align="center">{question.difficulty}</TableCell>
+                <TableCell align="center">
+                  <a href={question.questionInfo[0].titleInfo[1]}>
+                    {question.questionInfo[0].titleInfo[0]}
+                  </a>
+                </TableCell>
+                <TableCell align="center">
+                  {question.questionInfo[0].difficulty}
+                </TableCell>
                 <TableCell align="center">
                   {question.passed ? "Passed" : "Failed"}
                 </TableCell>
                 <TableCell align="center">{question.date}</TableCell>
-                <TableCell align="center">{question.solution}</TableCell>
+                <TableCell align="center">
+                  <a href={question.questionInfo[0].solution}>Java</a>
+                </TableCell>
               </TableRow>
             ))
           ) : (

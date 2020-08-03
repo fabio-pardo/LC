@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "../styles/QuestionForm.css";
+import Axios from "../../node_modules/axios/index";
 
 export default function QuestionForm() {
   const handleSubmitQuestion = (event) => {
-    console.log("Submitted!");
+    console.log(questionInfo);
+    Axios.post("/questions", {
+      _id: questionInfo._id,
+      date: questionInfo.date,
+      passed: questionInfo.passed,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  var nowDate = new Date();
+  var date =
+    nowDate.getMonth() +
+    1 +
+    "/" +
+    nowDate.getDate() +
+    "/" +
+    nowDate.getFullYear();
+
+  const [questionInfo, setQuestionInfo] = useState({
+    _id: 0,
+    passed: true,
+    date: date,
+  });
+
   return (
     <div id="questionForm">
       <p id="submitQuestionP">Submit a question:</p>
@@ -15,32 +43,45 @@ export default function QuestionForm() {
         <Form.Row>
           <Form.Group as={Col} controlId="formGridQuestionNumber">
             <Form.Label>Leetcode #</Form.Label>
-            <Form.Control placeholder="#" />
-          </Form.Group>
-
-          <Form.Group as={Col} md={6} controlId="formGridQuestionTitle">
-            <Form.Label>Question Title</Form.Label>
-            <Form.Control placeholder="Two Sum" />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridQuestionDifficulty">
-            <Form.Label>Difficulty</Form.Label>
-            <Form.Control as="select" custom>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </Form.Control>
+            <Form.Control
+              onChange={(e) => {
+                setQuestionInfo({
+                  _id: Number(e.target.value),
+                  passed: questionInfo.passed,
+                  date: questionInfo.date,
+                });
+              }}
+              required
+              placeholder="#"
+            />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridQuestionStatus">
             <Form.Label>Status</Form.Label>
-            <Form.Control as="select" custom>
-              <option value="passed">Passed</option>
-              <option value="failed">Failed</option>
+            <Form.Control
+              as="select"
+              onChange={(e) => {
+                if (e.target.value === "true") {
+                  setQuestionInfo({
+                    _id: questionInfo._id,
+                    passed: true,
+                    date: questionInfo.date,
+                  });
+                } else {
+                  setQuestionInfo({
+                    _id: questionInfo._id,
+                    passed: false,
+                    date: questionInfo.date,
+                  });
+                }
+              }}
+            >
+              <option value={true}>Passed</option>
+              <option value={false}>Failed</option>
             </Form.Control>
           </Form.Group>
         </Form.Row>
-        <Button variant="outline-primary" onClick={handleSubmitQuestion}>
+        <Button type="submit" variant="outline-primary">
           Submit Question
         </Button>
       </Form>

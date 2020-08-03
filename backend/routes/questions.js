@@ -10,7 +10,6 @@ var dbName = "test";
 var destinationNode = "mongodb://" + domain + ":" + port;
 
 router.use(function (req, res, next) {
-  console.log("/questions" + req.url, "@", Date.now());
   next();
 });
 
@@ -60,20 +59,18 @@ router
 
         // document to be inserted
         // test
-        var question = req.body;
-        var question_id = question._id;
-
-        // inserting document to 'questions collection' using insertOne
-        // var cursor = collection.insertOne(doc, function (err, res) {
+        console.log(req.body);
         collection.updateOne(
-          { _id: question_id },
-          { $set: question },
+          { _id: req.body._id },
+          { $set: { passed: req.body.passed, date: req.body.date } },
           { upsert: true },
-          function (err) {
-            if (err) {
-              res.status(500).send({ error: err });
+          function (error, result) {
+            if (error) {
+              console.log(error);
+              res.status(500).status({ err: error });
+            } else {
+              res.status(200).status({ inserted: true });
             }
-            res.status(200).send({ questionInserted: true });
             client.close();
           }
         );
