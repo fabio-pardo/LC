@@ -27,22 +27,22 @@ router
         // Retrieving the collection questions from MongoDB test
         var db = client.db(dbName);
         var questions = db.collection("questions");
-        var questionBank = db.collection("questionBank");
 
-        var questionList = [];
         questions
-          .find()
-          .sort({ _id: 1 })
-          .forEach((doc) => {
-            questionBank.findOne({ number: doc._id }, function (error, result) {
-              if (error) {
-                console.log(error);
-              }
-              questionList.push(result);
-            });
+          .aggregate([
+            {
+              $lookup: {
+                from: "questionBank",
+                localField: "_id",
+                foreignField: "number",
+                as: "questionInfo",
+              },
+            },
+          ])
+          .toArray((err, docs) => {
+            if (err) return res.status(500).send({ error: err });
+            res.send(docs);
           });
-
-        res.send("hi");
       }
     );
   })
@@ -71,10 +71,9 @@ router
           { upsert: true },
           function (err) {
             if (err) {
-              res.send({ updated: false });
-            } else {
-              res.send({ updated: true });
+              res.status(500).send({ error: err });
             }
+            res.status(200).send({ questionInserted: true });
             client.close();
           }
         );
