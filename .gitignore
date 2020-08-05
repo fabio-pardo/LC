@@ -2,3 +2,4 @@
 .vscode
 /config/local.js
 *package-lock.json
+backend/secrets.js
