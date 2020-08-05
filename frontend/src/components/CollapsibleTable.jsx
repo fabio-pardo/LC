@@ -36,8 +36,8 @@ function CollapsibleTable() {
         <TableBody>
           {questions.length > 0 ? (
             questions.map((question) => (
-              <TableRow key={question._id}>
-                <TableCell align="center">{question._id}</TableCell>
+              <TableRow key={question.number}>
+                <TableCell align="center">{question.number}</TableCell>
                 <TableCell align="center">
                   <a href={question.questionInfo[0].titleInfo[1]}>
                     {question.questionInfo[0].titleInfo[0]}

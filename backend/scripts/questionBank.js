@@ -1,8 +1,10 @@
 const fs = require("fs");
 const readLine = require("readline");
 const { MongoClient } = require("mongodb");
+const secrets = require("../secrets");
 
-async function processLineByLine() {
+//run node questionBank.js in ./script dir to update the collection questionBank
+async function questionBank() {
   const fileStream = fs.createReadStream("./questions.txt");
   const rl = readLine.createInterface({
     input: fileStream,
@@ -58,13 +60,13 @@ async function processLineByLine() {
   }
 
   MongoClient.connect(
-    "mongodb://127.0.0.1:27017",
+    secrets.mongodb,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
     function (err, client) {
-      var db = client.db("test");
+      var db = client.db(secrets.dbName);
       var collection = db.collection("questionBank");
       collection.insertMany(quests, function (err) {
         if (err) {
@@ -77,4 +79,4 @@ async function processLineByLine() {
   );
 }
 
-processLineByLine();
+questionBank();

@@ -3,11 +3,10 @@ var router = express.Router();
 var mongo = require("mongodb");
 const { get } = require(".");
 var MongoClient = mongo.MongoClient;
+const secrets = require("../secrets");
 
-var domain = "127.0.0.1";
-var port = 27017;
-var dbName = "test";
-var destinationNode = "mongodb://" + domain + ":" + port;
+var dbName = secrets.dbName;
+var destinationNode = secrets.mongodb;
 
 router.use(function (req, res, next) {
   next();
@@ -32,7 +31,7 @@ router
             {
               $lookup: {
                 from: "questionBank",
-                localField: "_id",
+                localField: "number",
                 foreignField: "number",
                 as: "questionInfo",
               },
@@ -58,15 +57,18 @@ router
         var collection = db.collection("questions");
 
         // document to be inserted
-        // test
-        console.log(req.body);
         collection.updateOne(
-          { _id: req.body._id },
-          { $set: { passed: req.body.passed, date: req.body.date } },
+          { number: req.body.number },
+          {
+            $set: {
+              number: req.body.number,
+              passed: req.body.passed,
+              date: req.body.date,
+            },
+          },
           { upsert: true },
           function (error, result) {
             if (error) {
-              console.log(error);
               res.status(500).status({ err: error });
             } else {
               res.status(200).status({ inserted: true });

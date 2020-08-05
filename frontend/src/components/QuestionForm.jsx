@@ -9,7 +9,7 @@ export default function QuestionForm() {
   const handleSubmitQuestion = (event) => {
     console.log(questionInfo);
     Axios.post("/questions", {
-      _id: questionInfo._id,
+      number: questionInfo.number,
       date: questionInfo.date,
       passed: questionInfo.passed,
     })
@@ -31,7 +31,7 @@ export default function QuestionForm() {
     nowDate.getFullYear();
 
   const [questionInfo, setQuestionInfo] = useState({
-    _id: 0,
+    number: 0,
     passed: true,
     date: date,
   });
@@ -46,7 +46,7 @@ export default function QuestionForm() {
             <Form.Control
               onChange={(e) => {
                 setQuestionInfo({
-                  _id: Number(e.target.value),
+                  number: Number(e.target.value),
                   passed: questionInfo.passed,
                   date: questionInfo.date,
                 });
@@ -63,13 +63,13 @@ export default function QuestionForm() {
               onChange={(e) => {
                 if (e.target.value === "true") {
                   setQuestionInfo({
-                    _id: questionInfo._id,
+                    number: questionInfo.number,
                     passed: true,
                     date: questionInfo.date,
                   });
                 } else {
                   setQuestionInfo({
-                    _id: questionInfo._id,
+                    number: questionInfo.number,
                     passed: false,
                     date: questionInfo.date,
                   });

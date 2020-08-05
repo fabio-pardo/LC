@@ -10,6 +10,10 @@ var usersRouter = require("./routes/users");
 var questionsRouter = require("./routes/questions");
 var app = express();
 
+////running the questionBank filler script
+//var questionBank = require("./scripts/questionBank");
+//questionBank.questionBank("./scripts/");
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
