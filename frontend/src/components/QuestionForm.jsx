@@ -59,6 +59,7 @@ export default function QuestionForm() {
           <Form.Group as={Col} controlId="formGridQuestionStatus">
             <Form.Label>Status</Form.Label>
             <Form.Control
+              required
               as="select"
               onChange={(e) => {
                 if (e.target.value === "true") {
