@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Paper from "@material-ui/core/Paper";
 import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,8 +21,8 @@ import LastPageIcon from "@material-ui/icons/LastPage";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     //backgroundColor: theme.palette.common.black,
-    backgroundColor: "#616161",
-    color: theme.palette.common.white,
+    backgroundColor: "lightgrey",
+    color: theme.palette.common.black,
   },
   body: {
     fontSize: 14,
@@ -139,10 +140,18 @@ function CollapsibleTable() {
       <Table size="small" aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">#</StyledTableCell>
+            <StyledTableCell align="right">
+              <TableSortLabel>#</TableSortLabel>
+            </StyledTableCell>
             <StyledTableCell align="center">Title</StyledTableCell>
-            <StyledTableCell align="center">Difficulty</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">
+              <TableSortLabel style={{ marginLeft: 25 }}>
+                Difficulty
+              </TableSortLabel>
+            </StyledTableCell>
+            <StyledTableCell align="center">
+              <TableSortLabel style={{ marginLeft: 25 }}>Status</TableSortLabel>
+            </StyledTableCell>
             <StyledTableCell align="center">Last Attempted</StyledTableCell>
             <StyledTableCell align="center">Solution</StyledTableCell>
           </TableRow>
@@ -156,7 +165,7 @@ function CollapsibleTable() {
             : questions
           ).map((question) => (
             <StyledTableRow key={question.number}>
-              <TableCell align="center">{question.number}</TableCell>
+              <TableCell align="right">{question.number}</TableCell>
               <TableCell align="center">
                 <a href={question.questionInfo[0].titleInfo[1]}>
                   {question.questionInfo[0].titleInfo[0]}
