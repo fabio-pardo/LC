@@ -117,6 +117,9 @@ function CollapsibleTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [sortDir, setSortDir] = useState("asc");
+  const [orderBy, setOrderBy] = useState("");
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -135,22 +138,117 @@ function CollapsibleTable() {
       .catch((err) => console.log("Error:", err));
   }, []);
 
+  function handleSort(type) {
+    setOrderBy(type);
+    sortDir === "asc" ? setSortDir("desc") : setSortDir("asc");
+    if (type === "number") {
+      if (sortDir === "asc") {
+        setQuestions(
+          questions.sort((a, b) => {
+            return a.number - b.number;
+          })
+        );
+      } else {
+        setQuestions(
+          questions.sort((a, b) => {
+            return b.number - a.number;
+          })
+        );
+      }
+    } else if (type === "difficulty") {
+      if (sortDir === "asc") {
+        setQuestions(
+          questions.sort((a, b) => {
+            a = a.questionInfo[0].difficulty;
+            b = b.questionInfo[0].difficulty;
+            if (a === b) {
+              return 0;
+            }
+            if (
+              (a === "Easy" && (b === "Medium" || b === "Hard")) ||
+              (a === "Medium" && b === "Hard")
+            ) {
+              return 1;
+            } else {
+              return -1;
+            }
+          })
+        );
+      } else {
+        setQuestions(
+          questions.sort((a, b) => {
+            a = a.questionInfo[0].difficulty;
+            b = b.questionInfo[0].difficulty;
+            if (a === b) {
+              return 0;
+            }
+            if (
+              (a === "Easy" && (b === "Medium" || b === "Hard")) ||
+              (a === "Medium" && b === "Hard")
+            ) {
+              return -1;
+            } else {
+              return 1;
+            }
+          })
+        );
+      }
+    } else {
+      if (sortDir === "asc") {
+        setQuestions(
+          questions.sort((a, b) => {
+            return a.passed === b.passed ? 0 : a.passed ? -1 : 1;
+          })
+        );
+      } else {
+        setQuestions(
+          questions.sort((a, b) => {
+            return a.passed === b.passed ? 0 : a.passed ? 1 : -1;
+          })
+        );
+      }
+    }
+  }
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="right">
-              <TableSortLabel>#</TableSortLabel>
+              <TableSortLabel
+                direction={sortDir === "asc" ? "desc" : "asc"}
+                active={orderBy === "number"}
+                onClick={() => {
+                  handleSort("number");
+                }}
+              >
+                #
+              </TableSortLabel>
             </StyledTableCell>
             <StyledTableCell align="center">Title</StyledTableCell>
             <StyledTableCell align="center">
-              <TableSortLabel style={{ marginLeft: 25 }}>
+              <TableSortLabel
+                direction={sortDir === "asc" ? "desc" : "asc"}
+                active={orderBy === "difficulty"}
+                onClick={() => {
+                  handleSort("difficulty");
+                }}
+                style={{ marginLeft: 25 }}
+              >
                 Difficulty
               </TableSortLabel>
             </StyledTableCell>
             <StyledTableCell align="center">
-              <TableSortLabel style={{ marginLeft: 25 }}>Status</TableSortLabel>
+              <TableSortLabel
+                direction={sortDir === "asc" ? "desc" : "asc"}
+                active={orderBy === "status"}
+                onClick={() => {
+                  handleSort("status");
+                }}
+                style={{ marginLeft: 25 }}
+              >
+                Status
+              </TableSortLabel>
             </StyledTableCell>
             <StyledTableCell align="center">Last Attempted</StyledTableCell>
             <StyledTableCell align="center">Solution</StyledTableCell>
