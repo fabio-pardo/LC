@@ -17,6 +17,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import Axios from "../../node_modules/axios/index";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -115,7 +116,7 @@ TablePaginationActions.propTypes = {
 function CollapsibleTable() {
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [sortDir, setSortDir] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -130,12 +131,14 @@ function CollapsibleTable() {
   };
 
   useEffect(() => {
-    fetch("/questions", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestions(data);
+    Axios.get("/questions")
+      .then(function (response) {
+        setQuestions(response.data);
       })
-      .catch((err) => console.log("Error:", err));
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {});
   }, []);
 
   function handleSort(type) {
