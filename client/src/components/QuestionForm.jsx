@@ -5,11 +5,13 @@ import Button from "react-bootstrap/Button";
 import "../styles/QuestionForm.css";
 import Axios from "../../node_modules/axios/index";
 
-export default function QuestionForm() {
+export default function QuestionForm(props) {
   const handleSubmitQuestion = (event) => {
-    Axios.get("/questions/questionBank/" + questionInfo.number)
+    event.preventDefault();
+    Axios.get(`/questions/questionBank/${questionInfo.number}`)
       .then((response) => {
         if (response.data !== "") {
+          window.location.reload(false);
           Axios.post("/questions", {
             number: questionInfo.number,
             date: questionInfo.date,
@@ -46,7 +48,7 @@ export default function QuestionForm() {
   return (
     <div id="questionForm">
       <p id="submitQuestionP">Submit a question:</p>
-      <Form onSubmit={handleSubmitQuestion}>
+      <Form onSubmit={(e) => handleSubmitQuestion(e)}>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridQuestionNumber">
             <Form.Label>Leetcode #</Form.Label>
