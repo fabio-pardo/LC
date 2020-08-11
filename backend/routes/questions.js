@@ -122,6 +122,7 @@ router.route("/questionBank/").get((req, res) => {
       myquestions.find({}).toArray(function (err, docs) {
         if (err) return res.status(500).send({ error: err });
         res.send(docs);
+        client.close();
       });
     }
   );

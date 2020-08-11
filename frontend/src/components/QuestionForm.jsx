@@ -7,14 +7,21 @@ import Axios from "../../node_modules/axios/index";
 
 export default function QuestionForm() {
   const handleSubmitQuestion = (event) => {
-    console.log(questionInfo);
-    Axios.post("/questions", {
-      number: questionInfo.number,
-      date: questionInfo.date,
-      passed: questionInfo.passed,
-    })
+    Axios.get("/questions/questionBank/" + questionInfo.number)
       .then((response) => {
-        console.log(response);
+        if (response.data !== "") {
+          Axios.post("/questions", {
+            number: questionInfo.number,
+            date: questionInfo.date,
+            passed: questionInfo.passed,
+          })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
