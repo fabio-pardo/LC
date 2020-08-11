@@ -1,26 +1,23 @@
 {
-  "name": "lc",
-  "version": "1.0.0",
-  "description": "LC root",
-  "main": "",
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
-    "start": "node ./backend/bin/www"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FPardo1023/LC.git"
-  },
-  "author": "Fabio Pardo",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/FPardo1023/LC/issues"
-  },
-  "homepage": "https://github.com/FPardo1023/LC#readme",
-  "devDependencies": {
-    "concurrently": "^5.3.0"
+    "start": "node ./bin/www",
+    "dev": "nodemon -L ./bin/www"
   },
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "^4.1.1",
+    "http-errors": "~1.6.3",
+    "mongodb": "^3.5.9",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "kill-port": "^1.6.1",
+    "nodemon": "^2.0.4"
   }
 }
