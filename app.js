@@ -48,4 +48,8 @@ hbs.registerHelper("json", function (context) {
   return JSON.stringify(context);
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 module.exports = app;
