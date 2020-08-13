@@ -77,34 +77,19 @@ export default function QuestionForm(props) {
                   setFeedbackHidden(true);
                 } else {
                   setFeedbackHidden(false);
+                  foundQuestion(e.target.value);
                 }
-
-                foundQuestion(e.target.value);
               }}
               required
               placeholder="#"
             />
             {foundQ && !feedbackHidden && (
-              <div
-                style={{
-                  width: `100%`,
-                  color: "#28a745",
-                  marginTop: ".25rem",
-                  fontSize: "80%",
-                }}
-              >
+              <div className="correctFeedback">
                 Question found. Ready to submit!
               </div>
             )}
             {!foundQ && !feedbackHidden && (
-              <div
-                style={{
-                  width: `100%`,
-                  color: "#dc3545",
-                  marginTop: ".25rem",
-                  fontSize: "80%",
-                }}
-              >
+              <div className="incorrectFeedback">
                 Question does not exist in our DB :(
               </div>
             )}

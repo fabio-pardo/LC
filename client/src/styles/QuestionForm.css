@@ -9,3 +9,17 @@
   margin-left: 0;
   font-weight: bold;
 }
+
+.incorrectFeedback {
+  width: 100%;
+  color:  #dc3545 ;
+  margin-top: .25rem;
+  font-size: 80%;
+}
+
+.correctFeedback {
+  width: 100%;
+  color:  #28a745;
+  margin-top: .25rem;
+  font-size: 80%;
+}
