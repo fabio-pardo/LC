@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Axios from "../../node_modules/axios/index";
+import Card from "../../node_modules/react-bootstrap/esm/Card";
+import { Button } from "../../node_modules/react-bootstrap/esm/index";
 export default function RandomQuestion() {
   const [failedQuestions, setFailedQuestions] = useState([]);
+  const [failedQ, setFailedQ] = useState({});
+
   useEffect(() => {
     Axios.get("/questions/failed")
       .then(function (response) {
-        console.log(response.data);
         setFailedQuestions(response.data);
+        randomFailed(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -14,19 +18,29 @@ export default function RandomQuestion() {
       .then(function () {});
   }, []);
 
+  function randomFailed(failedQuestions) {
+    var failed =
+      failedQuestions[Math.floor(Math.random() * failedQuestions.length)];
+    setFailedQ(failed);
+    return failed;
+  }
+
   if (failedQuestions.length > 0) {
     return (
-      <div
+      <Card
+        border="danger"
         style={{
-          borderTop: "1px",
-          borderTopColor: "lightblue",
-          borderTopStyle: "solid",
+          marginTop: "5px",
+          padding: "5px",
+          paddingBottom: "10px",
+          marginBottom: "10px",
         }}
       >
-        <p style={{ marginTop: "10px", marginLeft: 0, fontWeight: "bold" }}>
-          Random failed question:
-        </p>
-      </div>
+        <Card.Header as="h6">Try a failed question:</Card.Header>
+        <Button onClick={() => randomFailed(failedQuestions)}>
+          {failedQ.number}
+        </Button>
+      </Card>
     );
   }
 

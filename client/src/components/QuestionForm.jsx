@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "../styles/QuestionForm.css";
 import Axios from "../../node_modules/axios/index";
+import Card from "../../node_modules/react-bootstrap/esm/Card";
 
 export default function QuestionForm(props) {
   const handleSubmitQuestion = (event) => {
@@ -59,9 +60,10 @@ export default function QuestionForm(props) {
   const [feedbackHidden, setFeedbackHidden] = useState(true);
 
   return (
-    <div id="questionForm">
-      <p id="submitQuestionP">Submit a question:</p>
+    <Card border="success" id="questionForm">
+      <Card.Header as="h6">Submit a question:</Card.Header>
       <Form
+        style={{ padding: "15px", paddingLeft: "20px", paddingRight: "20px" }}
         autoComplete="off"
         noValidate
         onSubmit={(e) => handleSubmitQuestion(e)}
@@ -125,10 +127,10 @@ export default function QuestionForm(props) {
             </Form.Control>
           </Form.Group>
         </Form.Row>
-        <Button type="submit" variant="outline-primary">
+        <Button type="submit" variant="outline-success">
           Submit Question
         </Button>
       </Form>
-    </div>
+    </Card>
   );
 }
