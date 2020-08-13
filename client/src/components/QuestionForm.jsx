@@ -61,7 +61,11 @@ export default function QuestionForm(props) {
   return (
     <div id="questionForm">
       <p id="submitQuestionP">Submit a question:</p>
-      <Form noValidate onSubmit={(e) => handleSubmitQuestion(e)}>
+      <Form
+        autocomplete="off"
+        noValidate
+        onSubmit={(e) => handleSubmitQuestion(e)}
+      >
         <Form.Row>
           <Form.Group as={Col} controlId="formGridQuestionNumber">
             <Form.Label>Leetcode #</Form.Label>
