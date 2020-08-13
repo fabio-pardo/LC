@@ -108,6 +108,41 @@ router.route("/attempted/:questionid").get((req, res) => {
   );
 });
 
+router.route("/failed/").get((req, res) => {
+  MongoClient.connect(
+    destinationNode,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    function (err, client) {
+      // Retrieving the collection questions from MongoDB test
+      var db = client.db(dbName);
+      var collection = db.collection("questions");
+      collection
+        .aggregate([
+          {
+            $match: {
+              passed: false,
+            },
+          },
+          {
+            $lookup: {
+              from: "questionBank",
+              localField: "number",
+              foreignField: "number",
+              as: "questionInfo",
+            },
+          },
+        ])
+        .toArray((err, docs) => {
+          if (err) return res.status(500).send({ error: err });
+          res.send(docs);
+        });
+    }
+  );
+});
+
 router.route("/questionBank/").get((req, res) => {
   MongoClient.connect(
     destinationNode,

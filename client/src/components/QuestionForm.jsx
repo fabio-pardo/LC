@@ -62,7 +62,7 @@ export default function QuestionForm(props) {
     <div id="questionForm">
       <p id="submitQuestionP">Submit a question:</p>
       <Form
-        autocomplete="off"
+        autoComplete="off"
         noValidate
         onSubmit={(e) => handleSubmitQuestion(e)}
       >

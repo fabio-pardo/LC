@@ -4,6 +4,7 @@ import Welcome from "./components/Welcome";
 import CollapsibleTable from "./components/CollapsibleTable";
 import QuestionForm from "./components/QuestionForm";
 import Container from "react-bootstrap/Container";
+import RandomQuestion from "./components/RandomQuestion";
 
 class App extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class App extends React.Component {
       <Container fluid>
         <Welcome />
         <QuestionForm />
+        <RandomQuestion />
         <CollapsibleTable />
       </Container>
     );
