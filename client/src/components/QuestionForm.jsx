@@ -30,6 +30,16 @@ export default function QuestionForm(props) {
       });
   };
 
+  const foundQuestion = (questionNumber) => {
+    Axios.get(`/questions/questionBank/${questionNumber}`).then((response) => {
+      if (response.data === "") {
+        setFoundQ(false);
+      } else {
+        setFoundQ(true);
+      }
+    });
+  };
+
   var nowDate = new Date();
   var date =
     nowDate.getMonth() +
@@ -45,10 +55,13 @@ export default function QuestionForm(props) {
     date: date,
   });
 
+  const [foundQ, setFoundQ] = useState(false);
+  const [feedbackHidden, setFeedbackHidden] = useState(true);
+
   return (
     <div id="questionForm">
       <p id="submitQuestionP">Submit a question:</p>
-      <Form onSubmit={(e) => handleSubmitQuestion(e)}>
+      <Form noValidate onSubmit={(e) => handleSubmitQuestion(e)}>
         <Form.Row>
           <Form.Group as={Col} controlId="formGridQuestionNumber">
             <Form.Label>Leetcode #</Form.Label>
@@ -59,10 +72,42 @@ export default function QuestionForm(props) {
                   passed: questionInfo.passed,
                   date: questionInfo.date,
                 });
+
+                if (e.target.value === "") {
+                  setFeedbackHidden(true);
+                } else {
+                  setFeedbackHidden(false);
+                }
+
+                foundQuestion(e.target.value);
               }}
               required
               placeholder="#"
             />
+            {foundQ && !feedbackHidden && (
+              <div
+                style={{
+                  width: `100%`,
+                  color: "#28a745",
+                  marginTop: ".25rem",
+                  fontSize: "80%",
+                }}
+              >
+                Question found. Ready to submit!
+              </div>
+            )}
+            {!foundQ && !feedbackHidden && (
+              <div
+                style={{
+                  width: `100%`,
+                  color: "#dc3545",
+                  marginTop: ".25rem",
+                  fontSize: "80%",
+                }}
+              >
+                Question does not exist in our DB :(
+              </div>
+            )}
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridQuestionStatus">
