@@ -4,6 +4,7 @@ import Welcome from "./components/Welcome";
 import CollapsibleTable from "./components/CollapsibleTable";
 import QuestionForm from "./components/QuestionForm";
 import Container from "react-bootstrap/Container";
+import CardDeck from "react-bootstrap/CardDeck";
 import RandomQuestion from "./components/RandomQuestion";
 
 class App extends React.Component {
@@ -11,8 +12,10 @@ class App extends React.Component {
     return (
       <Container fluid>
         <Welcome />
-        <QuestionForm />
-        <RandomQuestion />
+        <CardDeck>
+          <QuestionForm />
+          <RandomQuestion />
+        </CardDeck>
         <CollapsibleTable />
       </Container>
     );

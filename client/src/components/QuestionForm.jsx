@@ -64,75 +64,80 @@ export default function QuestionForm(props) {
       <Card.Header className="text-center" as="h6">
         Submit a question
       </Card.Header>
-      <Form
-        style={{ padding: "15px", paddingLeft: "20px", paddingRight: "20px" }}
-        autoComplete="off"
-        noValidate
-        onSubmit={(e) => handleSubmitQuestion(e)}
-      >
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridQuestionNumber">
-            <Form.Label>Leetcode #</Form.Label>
-            <Form.Control
-              onChange={(e) => {
-                setQuestionInfo({
-                  number: Number(e.target.value),
-                  passed: questionInfo.passed,
-                  date: questionInfo.date,
-                });
-
-                if (e.target.value === "") {
-                  setFeedbackHidden(true);
-                } else {
-                  setFeedbackHidden(false);
-                  foundQuestion(e.target.value);
-                }
-              }}
-              required
-              placeholder="#"
-            />
-            {foundQ && !feedbackHidden && (
-              <div className="correctFeedback">
-                Question found. Ready to submit!
-              </div>
-            )}
-            {!foundQ && !feedbackHidden && (
-              <div className="incorrectFeedback">
-                Question does not exist in our DB :(
-              </div>
-            )}
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridQuestionStatus">
-            <Form.Label>Status</Form.Label>
-            <Form.Control
-              required
-              as="select"
-              onChange={(e) => {
-                if (e.target.value === "true") {
+      <Card.Body>
+        <Form
+          style={{ padding: "15px", paddingLeft: "20px", paddingRight: "20px" }}
+          autoComplete="off"
+          noValidate
+          onSubmit={(e) => handleSubmitQuestion(e)}
+        >
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridQuestionNumber">
+              <Form.Label>Leetcode #</Form.Label>
+              <Form.Control
+                onChange={(e) => {
                   setQuestionInfo({
-                    number: questionInfo.number,
-                    passed: true,
+                    number: Number(e.target.value),
+                    passed: questionInfo.passed,
                     date: questionInfo.date,
                   });
-                } else {
-                  setQuestionInfo({
-                    number: questionInfo.number,
-                    passed: false,
-                    date: questionInfo.date,
-                  });
-                }
-              }}
-            >
-              <option value={true}>Passed</option>
-              <option value={false}>Failed</option>
-            </Form.Control>
-          </Form.Group>
-        </Form.Row>
+
+                  if (e.target.value === "") {
+                    setFeedbackHidden(true);
+                  } else {
+                    setFeedbackHidden(false);
+                    foundQuestion(e.target.value);
+                  }
+                }}
+                required
+                placeholder="#"
+              />
+              {foundQ && !feedbackHidden && (
+                <div className="correctFeedback">
+                  Question found. Ready to submit!
+                </div>
+              )}
+              {!foundQ && !feedbackHidden && (
+                <div className="incorrectFeedback">
+                  Question does not exist in our DB :(
+                </div>
+              )}
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridQuestionStatus">
+              <Form.Label>Status</Form.Label>
+              <Form.Control
+                required
+                as="select"
+                onChange={(e) => {
+                  if (e.target.value === "true") {
+                    setQuestionInfo({
+                      number: questionInfo.number,
+                      passed: true,
+                      date: questionInfo.date,
+                    });
+                  } else {
+                    setQuestionInfo({
+                      number: questionInfo.number,
+                      passed: false,
+                      date: questionInfo.date,
+                    });
+                  }
+                }}
+              >
+                <option value={true}>Passed</option>
+                <option value={false}>Failed</option>
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
+        </Form>
+      </Card.Body>
+
+      <Card.Footer>
         <Button type="submit" variant="success">
           Submit Question
         </Button>
-      </Form>
+      </Card.Footer>
     </Card>
   );
 }

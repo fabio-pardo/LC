@@ -18,11 +18,6 @@ export default function RandomQuestion() {
     ],
   });
   const [inPassed, setInPassed] = useState(false);
-  const [passedQuestion, setPassedQuestion] = useState({
-    date: "",
-    number: 0,
-    passed: true,
-  });
 
   var nowDate = new Date();
   var date =
@@ -101,7 +96,7 @@ export default function RandomQuestion() {
           <Card.Link href={failedQ.questionInfo[0].titleInfo[1]}>
             Leetcode
           </Card.Link>
-          <Card.Link href={failedQ.questionInfo[0].titleInfo[1]}>
+          <Card.Link href={failedQ.questionInfo[0].solution}>
             Solution
           </Card.Link>
         </Card.Body>
@@ -109,7 +104,7 @@ export default function RandomQuestion() {
           <Card.Footer className="text-muted">
             <Button
               variant="outline-danger"
-              style={{ marginRight: "10px" }}
+              style={{ margin: "10px" }}
               onClick={() => randomFailed(failedQuestions)}
             >
               Random
@@ -119,6 +114,7 @@ export default function RandomQuestion() {
               onClick={() => {
                 setInPassed(true);
               }}
+              style={{ margin: "10px" }}
             >
               Passed
             </Button>
@@ -129,7 +125,7 @@ export default function RandomQuestion() {
           <Card.Footer className="text-muted">
             <Button
               variant="success"
-              style={{ marginRight: "10px" }}
+              style={{ margin: "10px" }}
               type="submit"
               onClick={(e) => handleSubmitQuestion(e)}
             >
@@ -140,6 +136,7 @@ export default function RandomQuestion() {
               onClick={() => {
                 setInPassed(false);
               }}
+              style={{ margin: "10px" }}
             >
               Failed it :(
             </Button>
