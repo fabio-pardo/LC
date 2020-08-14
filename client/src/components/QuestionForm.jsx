@@ -134,7 +134,11 @@ export default function QuestionForm(props) {
       </Card.Body>
 
       <Card.Footer>
-        <Button type="submit" variant="success">
+        <Button
+          onClick={(e) => handleSubmitQuestion(e)}
+          type="submit"
+          variant="success"
+        >
           Submit Question
         </Button>
       </Card.Footer>
