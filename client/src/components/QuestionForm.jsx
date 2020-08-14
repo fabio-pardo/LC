@@ -129,7 +129,7 @@ export default function QuestionForm(props) {
             </Form.Control>
           </Form.Group>
         </Form.Row>
-        <Button type="submit" variant="outline-success">
+        <Button type="submit" variant="success">
           Submit Question
         </Button>
       </Form>

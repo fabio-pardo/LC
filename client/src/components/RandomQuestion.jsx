@@ -17,6 +17,45 @@ export default function RandomQuestion() {
       },
     ],
   });
+  const [inPassed, setInPassed] = useState(false);
+  const [passedQuestion, setPassedQuestion] = useState({
+    date: "",
+    number: 0,
+    passed: true,
+  });
+
+  var nowDate = new Date();
+  var date =
+    nowDate.getMonth() +
+    1 +
+    "/" +
+    nowDate.getDate() +
+    "/" +
+    nowDate.getFullYear();
+
+  const handleSubmitQuestion = (event) => {
+    event.preventDefault();
+    Axios.get(`/questions/questionBank/${failedQ.number}`)
+      .then((response) => {
+        if (response.data !== "") {
+          window.location.reload(false);
+          Axios.post("/questions", {
+            number: failedQ.number,
+            date: date,
+            passed: true,
+          })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     Axios.get("/questions/failed")
@@ -66,17 +105,46 @@ export default function RandomQuestion() {
             Solution
           </Card.Link>
         </Card.Body>
-        <Card.Footer className="text-muted">
-          <Button
-            style={{ marginRight: "10px" }}
-            onClick={() => randomFailed(failedQuestions)}
-          >
-            Random
-          </Button>
-          <Button variant="success" onClick={() => {}}>
-            Passed
-          </Button>
-        </Card.Footer>
+        {!inPassed && (
+          <Card.Footer className="text-muted">
+            <Button
+              variant="outline-danger"
+              style={{ marginRight: "10px" }}
+              onClick={() => randomFailed(failedQuestions)}
+            >
+              Random
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                setInPassed(true);
+              }}
+            >
+              Passed
+            </Button>
+          </Card.Footer>
+        )}
+
+        {inPassed && (
+          <Card.Footer className="text-muted">
+            <Button
+              variant="success"
+              style={{ marginRight: "10px" }}
+              type="submit"
+              onClick={(e) => handleSubmitQuestion(e)}
+            >
+              I passed!
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                setInPassed(false);
+              }}
+            >
+              Failed it :(
+            </Button>
+          </Card.Footer>
+        )}
       </Card>
     );
   }
