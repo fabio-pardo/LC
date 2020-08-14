@@ -61,7 +61,9 @@ export default function QuestionForm(props) {
 
   return (
     <Card border="success" id="questionForm">
-      <Card.Header as="h6">Submit a question:</Card.Header>
+      <Card.Header className="text-center" as="h6">
+        Submit a question
+      </Card.Header>
       <Form
         style={{ padding: "15px", paddingLeft: "20px", paddingRight: "20px" }}
         autoComplete="off"

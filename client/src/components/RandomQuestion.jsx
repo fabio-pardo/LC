@@ -4,7 +4,19 @@ import Card from "../../node_modules/react-bootstrap/esm/Card";
 import { Button } from "../../node_modules/react-bootstrap/esm/index";
 export default function RandomQuestion() {
   const [failedQuestions, setFailedQuestions] = useState([]);
-  const [failedQ, setFailedQ] = useState({});
+  const [failedQ, setFailedQ] = useState({
+    date: "",
+    number: 0,
+    passed: false,
+    questionInfo: [
+      {
+        difficulty: "",
+        number: 0,
+        solution: "",
+        titleInfo: ["", ""],
+      },
+    ],
+  });
 
   useEffect(() => {
     Axios.get("/questions/failed")
@@ -28,6 +40,7 @@ export default function RandomQuestion() {
   if (failedQuestions.length > 0) {
     return (
       <Card
+        className="text-center"
         border="danger"
         style={{
           marginTop: "5px",
@@ -36,10 +49,34 @@ export default function RandomQuestion() {
           marginBottom: "10px",
         }}
       >
-        <Card.Header as="h6">Try a failed question:</Card.Header>
-        <Button onClick={() => randomFailed(failedQuestions)}>
-          {failedQ.number}
-        </Button>
+        <Card.Header as="h6">Try a failed question</Card.Header>
+        <Card.Body>
+          <Card.Title>{`${failedQ.number}`}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {failedQ.questionInfo[0].titleInfo[0]}
+          </Card.Subtitle>
+          <Card.Text
+            style={{ fontSize: "14px" }}
+            className="text-muted"
+          >{`Last Attempted: ${failedQ.date}`}</Card.Text>
+          <Card.Link href={failedQ.questionInfo[0].titleInfo[1]}>
+            Leetcode
+          </Card.Link>
+          <Card.Link href={failedQ.questionInfo[0].titleInfo[1]}>
+            Solution
+          </Card.Link>
+        </Card.Body>
+        <Card.Footer className="text-muted">
+          <Button
+            style={{ marginRight: "10px" }}
+            onClick={() => randomFailed(failedQuestions)}
+          >
+            Random
+          </Button>
+          <Button variant="success" onClick={() => {}}>
+            Passed
+          </Button>
+        </Card.Footer>
       </Card>
     );
   }
