@@ -1,0 +1,9 @@
+#footer {
+  position: absolute;
+  bottom: 0;
+  vertical-align: middle; 
+  font-size: xx-large;
+  text-align: center;
+  max-width: 930px;
+  width: 100%;
+}
