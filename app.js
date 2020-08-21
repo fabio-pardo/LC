@@ -4,9 +4,12 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var hbs = require("hbs");
+const passport = require("passport");
 
-var usersRouter = require("./routes/users");
 var questionsRouter = require("./routes/questions");
+var usersRouter = require("./routes/users");
+
+const mongoose = require("mongoose");
 var app = express();
 
 ////running the questionBank filler script
@@ -22,6 +25,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+const db = require("./config/secrets").mongodb;
+mongoose
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch((err) => console.log(err));
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
 
 app.use("/", express.static(path.join(__dirname, "/client/build")));
 app.use("/users", usersRouter);

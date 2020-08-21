@@ -1,4 +1,4 @@
 *node_modules
 .vscode
-/config/local.js
 *package-lock.json
+config/secrets.js
