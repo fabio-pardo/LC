@@ -1,9 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var mongo = require("mongodb");
-const { get } = require(".");
 var MongoClient = mongo.MongoClient;
-const secrets = require("../secrets");
+const secrets = require("../config/secrets");
 
 var dbName = secrets.dbName;
 var destinationNode = secrets.mongodb;
