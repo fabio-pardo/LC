@@ -12,11 +12,11 @@ class Welcome extends Component {
       <div className="welcome">
         <Grid container direction="column">
           <Grid item>
-            <h1> Welcome to the LC App {user.name.split(" ")[0]}!</h1>
+            <h1> Welcome to the LC App, {user.name.split(" ")[0]}!</h1>
           </Grid>
           <Grid item>
             <p>
-              Here you can store your leetcode progress or you can attempt a
+              Here you can store your leetcode progress and you can attempt a
               question that you attempted previously, but didn't pass, so you
               can see if you've progressed in your technical interview grind.
               Let's get started!

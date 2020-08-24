@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import Axios from "../../node_modules/axios/index";
 import Card from "../../node_modules/react-bootstrap/esm/Card";
 import { Button } from "../../node_modules/react-bootstrap/esm/index";
-export default function RandomQuestion() {
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+function RandomQuestion(props) {
   const [failedQuestions, setFailedQuestions] = useState([]);
   const [failedQ, setFailedQ] = useState({
     date: "",
@@ -35,6 +37,7 @@ export default function RandomQuestion() {
         if (response.data !== "") {
           window.location.reload(false);
           Axios.post("/questions", {
+            userId: user.id,
             number: failedQ.number,
             date: date,
             passed: true,
@@ -52,8 +55,10 @@ export default function RandomQuestion() {
       });
   };
 
+  const { user } = props.auth;
+
   useEffect(() => {
-    Axios.get("/questions/failed")
+    Axios.get("/questions/failed", { params: { userId: user.id } })
       .then(function (response) {
         setFailedQuestions(response.data);
         randomFailed(response.data);
@@ -62,7 +67,7 @@ export default function RandomQuestion() {
         console.log(error);
       })
       .then(function () {});
-  }, []);
+  }, [user.id]);
 
   function randomFailed(failedQuestions) {
     var failed =
@@ -102,13 +107,15 @@ export default function RandomQuestion() {
         </Card.Body>
         {!inPassed && (
           <Card.Footer className="text-muted">
-            <Button
-              variant="outline-danger"
-              style={{ margin: "10px" }}
-              onClick={() => randomFailed(failedQuestions)}
-            >
-              Random
-            </Button>
+            {failedQuestions.length > 1 && (
+              <Button
+                variant="outline-danger"
+                style={{ margin: "10px" }}
+                onClick={() => randomFailed(failedQuestions)}
+              >
+                Random
+              </Button>
+            )}
             <Button
               variant="success"
               onClick={() => {
@@ -148,3 +155,13 @@ export default function RandomQuestion() {
 
   return null;
 }
+
+RandomQuestion.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(RandomQuestion);

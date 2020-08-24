@@ -28,6 +28,11 @@ router
         questions
           .aggregate([
             {
+              $match: {
+                userId: mongo.ObjectID(req.query.userId),
+              },
+            },
+            {
               $lookup: {
                 from: "questionBank",
                 localField: "number",
@@ -57,12 +62,13 @@ router
 
         // document to be inserted
         collection.updateOne(
-          { number: req.body.number },
+          { number: req.body.number, userId: mongo.ObjectId(req.body.userId) },
           {
             $set: {
               number: req.body.number,
               passed: req.body.passed,
               date: req.body.date,
+              userId: mongo.ObjectId(req.body.userId),
             },
           },
           { upsert: true },
@@ -118,10 +124,12 @@ router.route("/failed/").get((req, res) => {
       // Retrieving the collection questions from MongoDB test
       var db = client.db(dbName);
       var collection = db.collection("questions");
+
       collection
         .aggregate([
           {
             $match: {
+              userId: mongo.ObjectID(req.query.userId),
               passed: false,
             },
           },

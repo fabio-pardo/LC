@@ -5,8 +5,11 @@ import Button from "react-bootstrap/Button";
 import "../styles/QuestionForm.css";
 import Axios from "../../node_modules/axios/index";
 import Card from "../../node_modules/react-bootstrap/esm/Card";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export default function QuestionForm(props) {
+function QuestionForm(props) {
+  const { user } = props.auth;
   const handleSubmitQuestion = (event) => {
     event.preventDefault();
     Axios.get(`/questions/questionBank/${questionInfo.number}`)
@@ -14,6 +17,7 @@ export default function QuestionForm(props) {
         if (response.data !== "") {
           window.location.reload(false);
           Axios.post("/questions", {
+            userId: user.id,
             number: questionInfo.number,
             date: questionInfo.date,
             passed: questionInfo.passed,
@@ -145,3 +149,13 @@ export default function QuestionForm(props) {
     </Card>
   );
 }
+
+QuestionForm.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(QuestionForm);

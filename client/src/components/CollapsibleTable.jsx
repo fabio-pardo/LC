@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import "../styles/CollapsibleTable.css";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -113,7 +114,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function CollapsibleTable() {
+function CollapsibleTable(props) {
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -130,8 +131,12 @@ function CollapsibleTable() {
     setPage(0);
   };
 
+  const { user } = props.auth;
+
   useEffect(() => {
-    Axios.get("/questions")
+    Axios.get("/questions", {
+      params: { userId: user.id },
+    })
       .then(function (response) {
         setQuestions(response.data);
       })
@@ -139,7 +144,7 @@ function CollapsibleTable() {
         console.log(error);
       })
       .then(function () {});
-  }, []);
+  }, [user.id]);
 
   function handleSort(type) {
     setOrderBy(type);
@@ -324,4 +329,12 @@ function CollapsibleTable() {
   );
 }
 
-export default CollapsibleTable;
+CollapsibleTable.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(CollapsibleTable);
