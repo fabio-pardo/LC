@@ -2,12 +2,21 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 class Landing extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
-      <div style={{ height: "75vh" }}>
-        <div className="row h-50 align-items-end">
+      <div
+        className="container-fluid landing"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          padding: "20px",
+        }}
+      >
+        <div className="row text-center vertical-align">
           <div className="col text-center">
             <h4 style={{ fontSize: "2.28rem", lineHeight: "110%" }}>
               Use this app to <b>track</b> your leetcode progress!
@@ -20,8 +29,8 @@ class Landing extends Component {
         </div>
         <div>
           {!isAuthenticated ? (
-            <div className="row text-center justify-content-md-center">
-              <div className="col ">
+            <div className="row">
+              <div className="col text-center">
                 <Link
                   to="/register"
                   style={{
@@ -34,7 +43,7 @@ class Landing extends Component {
                   Register
                 </Link>
               </div>
-              <div className="col">
+              <div className="col text-center">
                 <Link
                   to="/login"
                   style={{

@@ -13,20 +13,28 @@ class Navbar extends Component {
   };
   render() {
     const { isAuthenticated } = this.props.auth;
+    const textAlign = !isAuthenticated ? "center" : "";
     return (
       <div
         style={{
-          paddingTop: "10px",
-          paddingLeft: "15px",
-          paddingRight: "15px",
+          top: 0,
+          left: 0,
+          height: "50px",
+          position: "absolute",
+          maxWidth: "960px",
+          width: "100%",
+          textAlign: textAlign,
         }}
       >
         <nav className="navbar-light">
-          <div className="row ">
-            <div className="col-auto mr-auto">
+          <div className="row">
+            <div className="col">
               <Link
-                style={{ fontFamily: "monospace", fontSize: "2.1rem" }}
-                className="navbar-brand black-text"
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "2.1rem",
+                }}
+                className="navbar-brand"
                 to="/"
               >
                 <SiLeetcode
@@ -36,13 +44,13 @@ class Navbar extends Component {
                 LC
               </Link>
             </div>
-            <div className="col-auto">
-              {isAuthenticated && (
+            {isAuthenticated && (
+              <div className="col-auto navbar-brand">
                 <Button onClick={this.onLogoutClick} variant="danger">
                   Logout
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </nav>
       </div>

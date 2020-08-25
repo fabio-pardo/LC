@@ -8,7 +8,11 @@ import CollapsibleTable from "../CollapsibleTable";
 
 export default function DashBoard() {
   return (
-    <Container>
+    <Container
+      style={{
+        paddingBottom: ".5rem",
+      }}
+    >
       <Welcome />
       <CardDeck>
         <QuestionForm />

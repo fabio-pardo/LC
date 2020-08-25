@@ -41,7 +41,14 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router>
-          <Container style={{ paddingBottom: "2.5rem" }} fluid>
+          <Container
+            style={{
+              minHeight: "100%",
+              paddingBottom: "2.5rem",
+              paddingTop: "3.0rem",
+            }}
+            fluid
+          >
             <Navbar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
