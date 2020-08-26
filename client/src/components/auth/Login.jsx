@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import { BiArrowBack } from "react-icons/bi";
+import Form from "react-bootstrap/Form";
 import classnames from "classnames";
 
 class Login extends Component {
@@ -49,24 +51,32 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
+      <div
+        style={{
+          height: "75vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+        }}
+        className="container"
+      >
+        <div className="row">
           <div className="col s8 offset-s2">
             <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
+              <BiArrowBack /> Back to home
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
                 <b>Login</b> below
               </h4>
-              <p className="grey-text text-darken-1">
+              <p style={{ marginLeft: 0 }}>
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
-                <input
+            <Form autoComplete="off" noValidate onSubmit={this.onSubmit}>
+              <Form.Group classname="input-field col s12">
+                <Form.Label htmlFor="email">Email</Form.Label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
@@ -76,14 +86,14 @@ class Login extends Component {
                     invalid: errors.email || errors.emailnotfound,
                   })}
                 />
-                <label htmlFor="email">Email</label>
                 <span className="red-text">
                   {errors.email}
                   {errors.emailnotfound}
                 </span>
-              </div>
-              <div className="input-field col s12">
-                <input
+              </Form.Group>
+              <Form.Group classname="input-field col s12">
+                <Form.Label htmlFor="password">Password</Form.Label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
@@ -93,13 +103,15 @@ class Login extends Component {
                     invalid: errors.password || errors.passwordincorrect,
                   })}
                 />
-                <label htmlFor="password">Password</label>
                 <span className="red-text">
                   {errors.password}
                   {errors.passwordincorrect}
                 </span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              </Form.Group>
+              <div
+                className="col text-center s12"
+                style={{ paddingLeft: "11.250px" }}
+              >
                 <button
                   style={{
                     width: "150px",
@@ -108,12 +120,12 @@ class Login extends Component {
                     marginTop: "1rem",
                   }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="btn btn-lg btn-outline-secondary  text-black"
                 >
                   Login
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>

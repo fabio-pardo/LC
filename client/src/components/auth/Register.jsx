@@ -4,6 +4,8 @@ import { Link, withRouter } from "react-router-dom";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import Form from "react-bootstrap/Form";
+import { BiArrowBack } from "react-icons/bi";
 
 class Register extends Component {
   constructor() {
@@ -52,24 +54,33 @@ class Register extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="container">
+      <div
+        style={{
+          height: "75vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+        }}
+        className="container"
+      >
         <div className="row">
           <div className="col s8 offset-s2">
             <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
+              <BiArrowBack />
+              Back to home
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h4>
                 <b>Register</b> below
               </h4>
-              <p className="grey-text text-darken-1">
+              <p style={{ marginLeft: 0 }}>
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
-                <input
+            <Form autoComplete="off" noValidate onSubmit={this.onSubmit}>
+              <Form.Group className="input-field col s12">
+                <Form.Label htmlFor="name">Name</Form.Label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.name}
                   error={errors.name}
@@ -77,11 +88,11 @@ class Register extends Component {
                   type="text"
                   className={classnames("", { invalid: errors.name })}
                 />
-                <label htmlFor="name">Name</label>
                 <span className="red-text">{errors.name}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
+              </Form.Group>
+              <Form.Group className="input-field col s12">
+                <label htmlFor="email">Email</label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
@@ -89,11 +100,11 @@ class Register extends Component {
                   type="email"
                   className={classnames("", { invalid: errors.email })}
                 />
-                <label htmlFor="email">Email</label>
                 <span className="red-text">{errors.email}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
+              </Form.Group>
+              <Form.Group className="input-field col s12">
+                <label htmlFor="password">Password</label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
@@ -101,11 +112,11 @@ class Register extends Component {
                   type="password"
                   className={classnames("", { invalid: errors.password })}
                 />
-                <label htmlFor="password">Password</label>
                 <span className="red-text">{errors.password}</span>
-              </div>
-              <div className="input-field col s12">
-                <input
+              </Form.Group>
+              <Form.Group className="input-field col s12">
+                <Form.Label htmlFor="password2">Confirm Password</Form.Label>
+                <Form.Control
                   onChange={this.onChange}
                   value={this.state.password2}
                   error={errors.password2}
@@ -113,10 +124,12 @@ class Register extends Component {
                   type="password"
                   className={classnames("", { invalid: errors.password2 })}
                 />
-                <label htmlFor="password2">Confirm Password</label>
                 <span className="red-text">{errors.password2}</span>
-              </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              </Form.Group>
+              <div
+                className="col text-center s12"
+                style={{ paddingLeft: "11.250px" }}
+              >
                 <button
                   style={{
                     width: "150px",
@@ -125,12 +138,12 @@ class Register extends Component {
                     marginTop: "1rem",
                   }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="btn btn-lg btn-outline-secondary  text-black"
                 >
                   Sign up
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>

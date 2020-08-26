@@ -13,3 +13,8 @@
   min-height: 75vh;
   padding-bottom: 1.5rem;
 }
+
+.red-text {
+  color: red;
+  font-size: smaller;
+}
