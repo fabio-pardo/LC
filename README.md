@@ -8,4 +8,6 @@ My binder, where I store my question papers, was getting pretty full and so I de
 
 I used https://github.com/fishercoder1534/Leetcode README.md file to scrap all of the algorithmic questions and insert them into my database to have solutions and other information about the questions. When you submit a question, you determine if you passed or failed it and my backend does all the work in figuring out the link where you can retry the question again in leetcode, it's title, the questions difficulty, and also providing you a link to the solution (in Java). 
 
+This app uses JsonWebTokens and PassportJS to authenticate it's users.
+
 This app is quaint and simple but it gets the job done :).
